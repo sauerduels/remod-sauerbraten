@@ -1915,17 +1915,18 @@ ICOMMAND(getsuicides, "i", (int *cn), {
             clientinfo *ci = getinfo(*cn);
             intret(ci ? ci->state.ext.suicides : 0);
          });
-}
 
-/**
- * Respawn player. If force is true, a new spawn position is picked
- * @group player
- * @arg1 client number
- * @arg2 force
- */
-ICOMMAND(spawnplayer, "ii", (int *cn, int *force), {
-    if ((force && *force && clients[*cn]->state.state != CS_SPECTATOR) || clients[*cn]->state.state == CS_DEAD) {
-        clients[*cn]->state.respawn();
-        sendspawn(clients[*cn]);
-    }
-});
+ /**
+  * Respawn player. If force is true, a new spawn position is picked
+  * @group player
+  * @arg1 client number
+  * @arg2 force
+  */
+ ICOMMAND(spawnplayer, "ii", (int *cn, int *force), {
+             clientinfo *ci = getinfo(*cn);
+             if ((force && *force && ci->state.state != CS_SPECTATOR) || ci->state.state == CS_DEAD) {
+                 ci->state.respawn();
+                 server::sendspawn(ci);
+             }
+         });
+}

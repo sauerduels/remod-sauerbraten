@@ -829,6 +829,7 @@ namespace game
 
 namespace server
 {
+    struct clientinfo;
     extern const char *modename(int n, const char *unknown = "unknown");
     extern const char *mastermodename(int n, const char *unknown = "unknown");
     extern void startintermission();
@@ -840,7 +841,7 @@ namespace server
     extern int msgsizelookup(int msg);
     extern bool serveroption(const char *arg);
     extern bool delayspawn(int type);
+    void sendspawn(clientinfo *ci);
 }
 
 #endif
-
