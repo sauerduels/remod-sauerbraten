@@ -281,6 +281,16 @@ exec "scripts/modules/syncauth.cfg"
 exec "scripts/modules/spy.cfg"
 
 
+//******** Auto respawn module ********
+// Execute module
+exec "scripts/modules/autorespawn.cfg"
+
+
+//******** Auto pause module ********
+// Execute module
+exec "scripts/modules/autopause.cfg"
+
+
 // -------------------------------------
 // COMMANDS
 // -------------------------------------
