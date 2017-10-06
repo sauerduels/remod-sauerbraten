@@ -1900,7 +1900,7 @@ namespace server
         if(gamemillis >= gamelimit && !interm)
         {
             //remod
-            if(overtime && m_teammode && remod::isteamsequalscore())
+            if(overtime && ((m_teammode && remod::isteamsequalscore()) || (!m_teammode && remod::isplayerssequalscore())))
             {
                 if(m_timed && smapname[0])
                 {
@@ -3656,4 +3656,3 @@ namespace server
 
     #include "aiman.h"
 }
-
