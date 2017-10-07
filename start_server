@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PS3='Select the server you want to run: '
+options=("Server #1" "Server #2" "Backup #1" "Backup #2" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Option 1")
+            ./server -fserver1.cfg -d
+            ;;
+        "Option 2")
+            ./server -fserver2.cfg -d
+            ;;
+        "Option 3")
+            ./server -fbackup1.cfg -d
+            ;;
+        "Option 4")
+            ./server -fbackup2.cfg -d
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo Invalid option;;
+    esac
+done
