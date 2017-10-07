@@ -3,10 +3,10 @@ STRIP = strip
 PROG = authgen
 
 CXXFLAGS = -s -O2 -DSTANDALONE
-INCLUDES = -I../../shared -I../../engine -I../../fpsgame -I../../enet/include
+INCLUDES = -I../shared -I../engine -I../fpsgame -I../enet/include
 
 OBJS = authgen.o \
-	../../shared/crypto.o
+	../shared/crypto.o
 
 default: all
 
@@ -16,7 +16,7 @@ all: $(OBJS) link
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $(subst .o,.cpp,$@) 
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(PROG) $(OBJS)
 
 link:
 	$(CXX)  $(OBJS) $(LIBS) -o $(PROG)
