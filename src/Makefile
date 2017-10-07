@@ -35,13 +35,13 @@ endif
 #result file name
 PLATFORM_SUFFIX=
 ifneq (,$(findstring x86_64,$(shell uname -a)))
-PLATFORM_SUFFIX=64
+PLATFORM_SUFFIX=
 endif
 ifneq (,$(findstring amd64,$(shell uname -a)))
-PLATFORM_SUFFIX=64
+PLATFORM_SUFFIX=
 endif
 
-SERVER_PREFIX=remod
+SERVER_PREFIX=server
 SERVER_NAME=$(SERVER_PREFIX)
 ifneq (,$(findstring MINGW,$(PLATFORM)))
 SERVER_NAME=$(SERVER_NAME)$(PLATFORM_SUFFIX).exe

@@ -1,6 +1,5 @@
 # Ignore binary files
-remod
-remod64
+server
 
 # Ignore anything compiled
 *.o
