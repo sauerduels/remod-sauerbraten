@@ -103,6 +103,18 @@ SERVER_OBJS= \
 	mod/jsonbanlist-standalone.o
 
 
+ENET_OBJS= \
+	callbacks.o \
+	compress.o \
+	host.o \
+	list.o \
+	packet.o \
+	peer.o \
+	protocol.o \
+	unix.o \
+	win32.o
+
+
 ### Options checks
 
 
@@ -245,15 +257,12 @@ SVNVERSION= $(shell svnversion -cn . 2>/dev/null | sed -e "s/.*://" -e "s/\([0-9
 ifneq "$(SVNVERSION)" " "
 override CXXFLAGS+= -DREMOD_VERSION="\"SVN build rev: $(SVNVERSION)\""
 endif
-
-enet/Makefile:
-	cd enet; autoreconf -vfi; ./configure --enable-shared=no --enable-static=yes
 	
-libenet: enet/Makefile
-	$(MAKE)	-C enet/ all
+libenet:
+	$(MAKE) -C enet CC='$(CC)' AR='$(AR)'
 
 clean-enet: enet/Makefile
-	$(MAKE) -C enet/ maintainer-clean
+	-$(RM) libenet.a $(ENET_OBJS)
 
 geoip/Makefile:
 	cd mod/GeoIP; chmod +x configure; ./configure --enable-shared=no --enable-static=yes
