@@ -4,14 +4,14 @@
 USE_GEOIP=true
 
 #Use irc bot? true|false
-USE_IRCBOT=true
+USE_IRCBOT=false
 
 #Sqlite3 support? true|false
-USE_SQLITE3=true
+USE_SQLITE3=false
 SQLITE3_USE_SYSTEM_LIBS=false
 
 #Mysql support? true|false
-USE_MYSQL=true
+USE_MYSQL=false
 MYSQL_USE_SYSTEM_LIBS=false
 
 #Use ssytem enet libraryie
