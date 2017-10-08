@@ -13,8 +13,10 @@ Features
   * auto respawn
   * auto pause
   * improved match starting script
+  * map pool support with random map picker
   * master config file for multiple servers
   * overtime support for non-team modes
+  * player IP masking
   * shell menu for multiple configs
 
 
