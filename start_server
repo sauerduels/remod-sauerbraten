@@ -5,16 +5,16 @@ options=("Primary #1" "Primary #2" "Backup #1" "Backup #2" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Option 1")
+        "Primary #1")
             ./server -fprimary1.cfg -d
             ;;
-        "Option 2")
+        "Primary #2")
             ./server -fprimary2.cfg -d
             ;;
-        "Option 3")
+        "Backup #1")
             ./server -fbackup1.cfg -d
             ;;
-        "Option 4")
+        "Backup #2")
             ./server -fbackup2.cfg -d
             ;;
         "Quit")
