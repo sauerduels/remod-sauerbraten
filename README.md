@@ -16,7 +16,7 @@ Features
   * map pool support with random map picker
   * master config file for multiple servers
   * overtime support for non-team modes
-  * player IP masking
+  * player IP hiding
   * shell menu for multiple configs
 
 
