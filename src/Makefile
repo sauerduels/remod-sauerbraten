@@ -121,7 +121,7 @@ ENET_OBJS= \
 
 #geoip
 ifeq ($(USE_GEOIP),true)
-override CXXFLAGS+= -DGEOIP -DGEOIPDATADIR -DPACKAGE_VERSION=\"1.6.9\"
+override CXXFLAGS+= -DGEOIP -DGEOIPDATADIR -DPACKAGE_VERSION=\"1.6.11\"
 override INCLUDES+= -Imod/libGeoIP/
 override SERVER_OBJS+= \
         mod/geoipmod2-standalone.o \
