@@ -18,6 +18,9 @@ MYSQL_USE_SYSTEM_LIBS=false
 ENET_USE_SYSTEM_LIBS=false
 ######################################
 
+#Use system zlib library
+ZLIB_USE_SYSTEM_LIBS=false
+
 ### Tools
 CXX=gcc
 MV=mv
@@ -75,6 +78,13 @@ ifeq ($(ENET_USE_SYSTEM_LIBS),true)
 else
 override INCLUDES += -Ienet/include
 override SERVER_LIBS += -Lenet
+endif
+
+### ZLIB
+ifeq ($(ZLIB_USE_SYSTEM_LIBS),true)
+else
+override INCLUDES += -Izlib
+override SERVER_LIBS += -Lzlib
 endif
 
 SERVER_OBJS= \
