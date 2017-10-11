@@ -16,10 +16,10 @@ MYSQL_USE_SYSTEM_LIBS=false
 
 #Use ssytem enet libraryie
 ENET_USE_SYSTEM_LIBS=false
-######################################
 
 #Use system zlib library
 ZLIB_USE_SYSTEM_LIBS=false
+######################################
 
 ### Tools
 CXX=gcc
@@ -274,6 +274,12 @@ libenet:
 clean-enet: enet/Makefile
 	-$(RM) libenet.a $(ENET_OBJS)
 
+libz:
+	cd zlib; ./configure; $(MAKE)
+
+clean-zlib:
+	$(MAKE) -C zlib/ distclean
+
 geoip/Makefile:
 	cd mod/GeoIP; chmod +x configure; ./configure --enable-shared=no --enable-static=yes
 
@@ -283,7 +289,7 @@ libgeoip: geoip/Makefile
 clean-geoip: geoip/Makefile
 	$(MAKE) -C mod/GeoIP/libGeoIP/ maintainer-clean
 
-clean: clean-enet
+clean: clean-enet clean-zlib
 	-$(RM) $(SERVER_OBJS) 
 
 %.h.gch: %.h
@@ -309,8 +315,8 @@ server:	$(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(SERVER_NAME) $(SERVER_OBJS) $(SERVER_LIBS)  
 	$(MV) $(SERVER_NAME) ../$(SERVER_NAME)
 else
-server:	libenet $(SERVER_OBJS)
+server:	libenet libz $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(SERVER_NAME) $(SERVER_OBJS) $(SERVER_LIBS)  
 	$(MV) $(SERVER_NAME) ../$(SERVER_NAME)
 endif
-endif
+
