@@ -150,6 +150,12 @@ SVNVERSION= $(shell svnversion -cn . 2>/dev/null | sed -e "s/.*://" -e "s/\([0-9
 ifneq "$(SVNVERSION)" " "
 override CXXFLAGS+= -DREMOD_VERSION="\"SVN build rev: $(SVNVERSION)\""
 endif
+
+auth:
+	cd authgen; $(MAKE)
+
+auth-clean:
+	$(MAKE) -C authgen/ clean
 	
 libenet:
 	$(MAKE) -C enet CC='$(CC)' AR='$(AR)'
@@ -202,4 +208,4 @@ server:	libenet libz $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(SERVER_NAME) $(SERVER_OBJS) $(SERVER_LIBS)  
 	$(MV) $(SERVER_NAME) ../$(SERVER_NAME)
 endif
-
+endif
