@@ -26,7 +26,7 @@ Install Instructions
 Building is currently only supported on Unix/Linux systems.
 
 First, make sure you have the following packages installed:
-`build-essential` `git` `zlib1g-dev`
+`build-essential` `git`
 
 Then clone the repository:
 `git clone https://github.com/sauerduels/server.git`
