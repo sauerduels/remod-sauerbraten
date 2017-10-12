@@ -271,7 +271,8 @@ namespace server
     VAR(maxdemosize, 0, 16, 31);
     VAR(restrictdemos, 0, 1, 1);
 
-    VAR(restrictpausegame, 0, 1, 1);
+    VAR(restrictpausegame, 0, 2, 2);
+    VAR(restrictresumegame, 0, 2, 2);
     VAR(restrictgamespeed, 0, 1, 1);
 
     SVAR(serverdesc, "");
@@ -998,7 +999,10 @@ namespace server
     {
         if(!gamepaused) return;
         int admins = 0;
-        loopv(clients) if(clients[i]->privilege >= (restrictpausegame ? PRIV_ADMIN : PRIV_MASTER) || clients[i]->local) admins++;
+        int priv = PRIV_NONE;
+        if (restrictresumegame == 1) priv = PRIV_MASTER;
+        if (restrictresumegame == 2) priv = PRIV_ADMIN;
+        loopv(clients) if(clients[i]->privilege >= priv || clients[i]->local) admins++;
         if(!admins) pausegame(false);
     }
 
@@ -3516,7 +3520,13 @@ namespace server
             case N_PAUSEGAME:
             {
                 int val = getint(p);
-                if(ci->privilege < (restrictpausegame ? PRIV_ADMIN : PRIV_MASTER) && !ci->local) break;
+                
+                int restriction = val? restrictpausegame: restrictresumegame;
+                int priv = PRIV_NONE;
+                if (restriction == 1) priv = PRIV_MASTER;
+                if (restriction == 2) priv = PRIV_ADMIN;
+
+                if((ci->privilege < priv || (priv == PRIV_NONE && ci->state.state==CS_SPECTATOR)) && !ci->local) break;
 
                 // remod
                 //pausegame(val > 0, ci);
