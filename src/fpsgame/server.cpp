@@ -63,7 +63,7 @@ namespace server
     VAR(packetdelay, 10, 33, 33);
     VAR(overtime, 0, 0, 600);
     VAR(nodamage, 0, 0, 1);
-    VAR(autospawnmillis, 0, 0, 1e9);
+    VAR(autospawnmillis, 0, 500, 1e9);
 
     vector<uint> allowedips;
     vector<ban> bannedips;
