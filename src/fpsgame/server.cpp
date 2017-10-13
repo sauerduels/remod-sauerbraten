@@ -63,6 +63,7 @@ namespace server
     VAR(packetdelay, 10, 33, 33);
     VAR(overtime, 0, 0, 600);
     VAR(nodamage, 0, 0, 1);
+    VAR(autospawnmillis, 0, 0, 1e9);
 
     vector<uint> allowedips;
     vector<ban> bannedips;
@@ -2221,6 +2222,20 @@ namespace server
                 }
                 aiman::checkai();
                 if(smode) smode->update();
+                
+                // auto respawn
+                if (autospawnmillis > 0)
+                {
+                    loopv(clients)
+                    {
+                        clientinfo *ci = clients[i];
+                        if (ci->state.state == CS_DEAD && gamemillis-ci->state.lastdeath >= autospawnmillis && ci->state.lastdeath > ci->state.lastspawn)
+                        {
+                            ci->state.respawn();
+                            sendspawn(ci);
+                        }
+                    }
+                }
             }
         }
 
