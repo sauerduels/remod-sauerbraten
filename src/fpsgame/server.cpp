@@ -1012,6 +1012,8 @@ namespace server
     }
 
     bool ispaused() { return gamepaused; }
+    
+    ICOMMAND(ispaused, "", (), { intret(ispaused()); });
 
     void changegamespeed(int val, clientinfo *ci = NULL)
     {
