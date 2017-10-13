@@ -4,7 +4,7 @@ PROG = authgen
 MV = mv
 
 CXXFLAGS = -s -O2 -DSTANDALONE
-INCLUDES = -I../shared -I../engine -I../fpsgame -I../enet/include
+INCLUDES = -I../shared -I../engine -I../fpsgame -I../enet/include -I../zlib
 
 OBJS = authgen.o \
 	../shared/crypto.o

@@ -2,6 +2,11 @@
 authgen
 server
 
-# Ignore anything compiled
+# Ignore object files
 *.o
 *.a
+
+# Ignore other files
+*.dmo
+*.log
+

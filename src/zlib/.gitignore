@@ -1,0 +1,14 @@
+# Ignore libraries
+*.lo
+
+# Ignore shared objects
+*.so
+*.so.*
+
+# Ignore other file types
+*.pc
+
+# Ignore other files
+example*
+minigzip*
+
