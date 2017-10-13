@@ -1150,13 +1150,6 @@ namespace server
             name = privname(ci->privilege);
             revokemaster(ci);
         }
-        bool hasmaster = false;
-        loopv(clients) if(clients[i]->local || clients[i]->privilege >= PRIV_MASTER) hasmaster = true;
-        if(!hasmaster)
-        {
-            mastermode = MM_OPEN;
-            allowedips.shrink(0);
-        }
         string msg;
         if(val && authname)
         {
