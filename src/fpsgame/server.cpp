@@ -3536,7 +3536,8 @@ namespace server
                 if (restriction == 1) priv = PRIV_MASTER;
                 if (restriction == 2) priv = PRIV_ADMIN;
 
-                if((ci->privilege < priv || (priv == PRIV_NONE && ci->state.state==CS_SPECTATOR)) && !ci->local) break;
+                if((ci->privilege<priv || (priv==PRIV_NONE && !ci->privilege && ci->state.state==CS_SPECTATOR)) && !ci->local) break;
+
 
                 // remod
                 //pausegame(val > 0, ci);
