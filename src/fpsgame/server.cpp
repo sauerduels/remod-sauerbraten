@@ -3058,12 +3058,6 @@ namespace server
                     break;
                 }
 
-                if(remod::checkmutemode(ci))
-                {
-                    remod::onevent(ONMUTEMODETRIGGER, "i", sender);
-                    break;
-                }
-
                 if(ci->state.ext.muted)
                 {
                     // call event not often that every 5 seconds
@@ -3077,9 +3071,23 @@ namespace server
 
                 remod::onevent(ONTEXT, "is", sender, ftext);
                 DELETEA(ftext);
-                QUEUE_AI;
-                QUEUE_INT(N_TEXT);
-                QUEUE_STR(text);
+                
+                if (remod::checkmutemode(ci))
+                {
+                    remod::onevent(ONMUTEMODETRIGGER, "i", sender);
+                    loopv(clients)
+                    {
+                        clientinfo *t = clients[i];
+                        if(t==cq || (t->state.state==CS_SPECTATOR) != (cq->state.state==CS_SPECTATOR) || t->state.aitype != AI_NONE) continue;
+                        sendf(t->clientnum, 1, "riis", N_SAYTEAM, cq->clientnum, text);
+                    }
+                }
+                else
+                {
+                    QUEUE_AI;
+                    QUEUE_INT(N_TEXT);
+                    QUEUE_STR(text);
+                }
 
                 //QUEUE_STR(text);
                 //if(isdedicatedserver() && cq) logoutf("%s: %s", colorname(cq), text);
@@ -3089,16 +3097,11 @@ namespace server
             case N_SAYTEAM:
             {
                 getstring(text, p);
-                if(!ci || !cq || (ci->state.state==CS_SPECTATOR && !ci->local && !ci->privilege) || !m_teammode || !cq->team[0]) break;
+                if(!ci || !cq || ((!m_teammode || !cq->team[0]) && cq->state.state!=CS_SPECTATOR)) break;
                 filtertext(text, text, true, true);
 
                 // remod
                 if(remod::checkflood(ci, type)) break;
-                if(remod::checkmutemode(ci))
-                {
-                    remod::onevent(ONMUTEMODETRIGGER, "i", sender);
-                    break;
-                }
                 if(ci->state.ext.muted)
                 {
                     // call event not often that every 5 seconds
@@ -3111,10 +3114,12 @@ namespace server
                 }
                 remod::onevent(ONSAYTEAM, "is", sender, text);
 
+                bool clmutemode = remod::checkmutemode(ci);
+                if (clmutemode) remod::onevent(ONMUTEMODETRIGGER, "i", sender);
                 loopv(clients)
                 {
                     clientinfo *t = clients[i];
-                    if(t==cq || t->state.state==CS_SPECTATOR || t->state.aitype != AI_NONE || strcmp(cq->team, t->team)) continue;
+                    if(t==cq || (clmutemode && t->state.state!=CS_SPECTATOR) || (cq->state.state==CS_SPECTATOR) != (t->state.state==CS_SPECTATOR) || t->state.aitype != AI_NONE || (cq->state.state!=CS_SPECTATOR && strcmp(cq->team, t->team))) continue;
                     sendf(t->clientnum, 1, "riis", N_SAYTEAM, cq->clientnum, text);
                 }
 
