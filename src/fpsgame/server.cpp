@@ -296,6 +296,28 @@ namespace server
     // remod
     SVAR(commandchar, "#"); //Command character
     SVAR(masterpass, "");   //Password for calim master instead of admin
+    
+    // sauerduels
+    FILE *statsfile = NULL;
+    
+    void closestatsfile()
+    {
+        if (statsfile)
+        {
+            fclose(statsfile);
+            statsfile = NULL;
+        }
+    }
+    
+    void setstatsfile(const char *fname)
+    {
+        closestatsfile();
+        if(fname && fname[0])
+        {
+            fname = findfile(fname, "w");
+            if(fname) statsfile = fopen(fname, "a");
+        }
+    }
 
     struct teamkillkick
     {
@@ -439,6 +461,7 @@ namespace server
             case 'y': setsvar("serverpass", &arg[2]); return true;
             case 'p': setsvar("adminpass", &arg[2]); return true;
             case 'o': setvar("publicserver", atoi(&arg[2])); return true;
+            case 's': closestatsfile(); setstatsfile(&arg[2]); return true;
         }
         return false;
     }
@@ -1915,6 +1938,17 @@ namespace server
             if(smode) smode->intermission();
             changegamespeed(100);
             interm = gamemillis + imissiontime; // remod
+            
+            // sauerduels
+            if (statsfile)
+            {
+                loopv(clients)
+                {
+                    if (clients[i]->state.state == CS_SPECTATOR) continue;
+                    fprintf(statsfile, "%u %d %s %s %d %d %d %d\n", time(NULL), gamemode, smapname, clients[i]->name, clients[i]->state.frags, clients[i]->state.deaths, clients[i]->state.shotdamage, clients[i]->state.damage);
+                }
+                fflush(statsfile);
+            }
 
             // remod
             remod::onevent(ONIMISSION, "");

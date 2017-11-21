@@ -77,6 +77,7 @@ void fatal(const char *fmt, ...)
 {
     void cleanupserver();
     cleanupserver();
+    server::closestatsfile();
 	defvformatstring(msg,fmt,fmt);
 	if(logfile) logoutf("%s", msg);
 #ifdef WIN32
