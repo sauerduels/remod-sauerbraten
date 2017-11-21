@@ -6,28 +6,28 @@ select opt in "${options[@]}"
 do
     case $opt in
         "Primary #1")
-            ./server -fprimary1.cfg -d
+            ./server -fservers/primary1.cfg -d
             ;;
         "Primary #2")
-            ./server -fprimary2.cfg -d
+            ./server -fservers/primary2.cfg -d
             ;;
         "Primary #3")
-            ./server -fprimary3.cfg -d
+            ./server -fservers/primary3.cfg -d
             ;;
         "Primary #4")
-            ./server -fprimary4.cfg -d
+            ./server -fservers/primary4.cfg -d
             ;;
         "Backup #1")
-            ./server -fbackup1.cfg -d
+            ./server -fservers/backup1.cfg -d
             ;;
         "Backup #2")
-            ./server -fbackup2.cfg -d
+            ./server -fservers/backup2.cfg -d
             ;;
         "Backup #3")
-            ./server -fbackup3.cfg -d
+            ./server -fservers/backup3.cfg -d
             ;;
         "Backup #4")
-            ./server -fbackup4.cfg -d
+            ./server -fservers/backup4.cfg -d
             ;;
         "Quit")
             break
