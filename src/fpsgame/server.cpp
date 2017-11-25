@@ -1945,7 +1945,13 @@ namespace server
                 loopv(clients)
                 {
                     if (clients[i]->state.state == CS_SPECTATOR) continue;
-                    fprintf(statsfile, "%u %d %s %s %d %d %d %d\n", time(NULL), gamemode, smapname, clients[i]->name, clients[i]->state.frags, clients[i]->state.deaths, clients[i]->state.shotdamage, clients[i]->state.damage);
+                    // time gamemode smapname name frags deaths shotdamage damage suicides weapons(chainsaw->pistol)
+                    fprintf(statsfile, "%u %d %s %s %d %d %d %d %d", time(NULL), gamemode, smapname, clients[i]->name, clients[i]->state.frags, clients[i]->state.deaths, clients[i]->state.shotdamage, clients[i]->state.damage, clients[i]->state.ext.suicides);
+                    for (int j=GUN_FIST; j<=GUN_PISTOL; j++)
+                    {
+                        fprintf(statsfile, " %d %d", clients[i]->state.ext.guninfo[j].shotdamage, clients[i]->state.ext.guninfo[j].damage);
+                    }
+                    fprintf(statsfile, "\n");
                 }
                 fflush(statsfile);
             }
