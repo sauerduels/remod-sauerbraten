@@ -164,7 +164,7 @@ clean-enet: enet/Makefile
 	-$(RM) libenet.a $(ENET_OBJS)
 
 libz:
-	cd zlib; ./configure; $(MAKE)
+	$(MAKE) -C zlib
 
 clean-zlib:
 	$(MAKE) -C zlib/ distclean
