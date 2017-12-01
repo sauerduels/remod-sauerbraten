@@ -1040,7 +1040,7 @@ struct utf8stream : stream
         for(; *mode; mode++)
         {
             if(*mode=='r') { reading = true; break; }
-            else if(*mode=='w') { writing = true; break; }
+            else if(*mode=='w' || *mode=='a') { writing = true; break; }
         }
         if(!reading && !writing) return false;
        
