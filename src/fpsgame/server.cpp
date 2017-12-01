@@ -298,13 +298,13 @@ namespace server
     SVAR(masterpass, "");   //Password for calim master instead of admin
     
     // sauerduels
-    FILE *statsfile = NULL;
+    stream *statsfile = NULL;
     
     void closestatsfile()
     {
         if (statsfile)
         {
-            fclose(statsfile);
+            statsfile->close();
             statsfile = NULL;
         }
     }
@@ -315,7 +315,7 @@ namespace server
         if(fname && fname[0])
         {
             fname = findfile(fname, "w");
-            if(fname) statsfile = fopen(fname, "a");
+            if(fname) statsfile = openutf8file(fname, "a");
         }
     }
 
@@ -1946,14 +1946,14 @@ namespace server
                 {
                     if (clients[i]->state.state == CS_SPECTATOR) continue;
                     // time gamemode smapname name frags deaths shotdamage damage suicides weapons(chainsaw->pistol)
-                    fprintf(statsfile, "%u %d %s %s %d %d %d %d %d", time(NULL), gamemode, smapname, clients[i]->name, clients[i]->state.frags, clients[i]->state.deaths, clients[i]->state.shotdamage, clients[i]->state.damage, clients[i]->state.ext.suicides);
+                    statsfile->printf("%u %d %s %s %d %d %d %d %d", time(NULL), gamemode, smapname, clients[i]->name, clients[i]->state.frags, clients[i]->state.deaths, clients[i]->state.shotdamage, clients[i]->state.damage, clients[i]->state.ext.suicides);
                     for (int j=GUN_FIST; j<=GUN_PISTOL; j++)
                     {
-                        fprintf(statsfile, " %d %d", clients[i]->state.ext.guninfo[j].shotdamage, clients[i]->state.ext.guninfo[j].damage);
+                        statsfile->printf(" %d %d", clients[i]->state.ext.guninfo[j].shotdamage, clients[i]->state.ext.guninfo[j].damage);
                     }
-                    fprintf(statsfile, "\n");
+                    statsfile->printf("\n");
                 }
-                fflush(statsfile);
+                statsfile->flush();
             }
 
             // remod
