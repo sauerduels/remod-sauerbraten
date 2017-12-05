@@ -167,7 +167,7 @@ libz:
 	$(MAKE) -C zlib
 
 clean-zlib:
-	$(MAKE) -C zlib/ distclean
+	$(MAKE) -C zlib/ clean
 
 geoip/Makefile:
 	cd mod/GeoIP; chmod +x configure; ./configure --enable-shared=no --enable-static=yes
