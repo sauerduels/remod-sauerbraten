@@ -150,12 +150,6 @@ SVNVERSION= $(shell svnversion -cn . 2>/dev/null | sed -e "s/.*://" -e "s/\([0-9
 ifneq "$(SVNVERSION)" " "
 override CXXFLAGS+= -DREMOD_VERSION="\"SVN build rev: $(SVNVERSION)\""
 endif
-
-auth:
-	cd authgen; $(MAKE)
-
-auth-clean:
-	$(MAKE) -C authgen/ clean
 	
 libenet:
 	$(MAKE) -C enet CC='$(CC)' AR='$(AR)'
