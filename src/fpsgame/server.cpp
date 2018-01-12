@@ -3170,6 +3170,13 @@ namespace server
 
                 //remod
                 if(remod::checkflood(ci, N_SWITCHNAME)) break;
+                
+                // sauerduels
+                if (remod::checkmutemode(ci))
+                {
+                    sendf(ci->clientnum, 1, "riiiis", N_CLIENT, ci->clientnum, strlen(ci->name)+3, N_SWITCHNAME, ci->name);
+                    return;
+                }
 
                 string oldname;
                 copystring(oldname, ci->name);
