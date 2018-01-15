@@ -29,7 +29,7 @@ First, make sure you have the following packages installed:
 `build-essential` `git`
 
 Then clone the repository:
-`git clone https://github.com/sauerduels/server.git`
+`git clone https://github.com/sauerduels/sauer-server.git`
 
 Then navigate to the src/ folder and simply use make:
 `make`
