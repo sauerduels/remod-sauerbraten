@@ -479,7 +479,7 @@ bool loadents(const char *fname, vector<entity> &ents, uint *crc)
 {
     string ogzname, entsname;
     char * mapname = newstring(fname);
-+    fixmapname(mapname);
+    fixmapname(mapname);
     formatstring(ogzname, "%s/%s.ogz", remod::mapdir, mapname);
     formatstring(entsname, "%s/%s.ents", remod::mapdir, mapname);
     path(ogzname);
