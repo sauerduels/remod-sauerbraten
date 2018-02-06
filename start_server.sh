@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PS3='Select the server you want to run: '
-options=("Primary #1" "Primary #2" "Primary #3" "Primary #4" "Backup #1" "Backup #2" "Backup #3" "Backup #4" "Quit")
+options=("Primary #1" "Primary #2" "Primary #3" "Primary #4" "Primary US #1" "Backup #1" "Backup #2" "Backup #3" "Backup #4" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -16,6 +16,9 @@ do
             ;;
         "Primary #4")
             ./server -fservers/primary4.cfg -sp4stats.log -d
+            ;;
+        "Primary US #1")
+            ./server -fservers/primaryus1.cfg -spus1stats.log -d
             ;;
         "Backup #1")
             ./server -fservers/backup1.cfg -sb1stats.log -d
