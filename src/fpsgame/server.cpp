@@ -561,6 +561,13 @@ namespace server
         sents[i].spawntime = spawntime(sents[i].type);
         sendf(-1, 1, "ri3", N_ITEMACC, i, sender);
         ci->state.pickup(sents[i].type);
+        gamestate &gs = ci->state;
+        sendf(-1, 1, "ri3i9vi", N_RESUME, ci->clientnum,
+            gs.state, gs.frags, gs.flags, gs.quadmillis,
+            gs.lifesequence,
+            gs.health, gs.maxhealth,
+            gs.armour, gs.armourtype,
+            gs.gunselect, GUN_PISTOL-GUN_SG+1, &gs.ammo[GUN_SG], -1);
         return true;
     }
 
