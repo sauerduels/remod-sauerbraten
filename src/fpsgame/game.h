@@ -397,7 +397,7 @@ struct fpsstate
         itemstat &is = itemstats[type-I_SHELLS];
         switch(type)
         {
-            case I_BOOST: return health<200;
+            case I_BOOST: return health<1000;
             case I_HEALTH: return health<maxhealth;
             case I_GREENARMOUR:
                 // (100h/100g only absorbs 200 damage)
