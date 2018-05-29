@@ -130,6 +130,7 @@ struct client                   // server side version of "dynent" type
     ENetPeer *peer;
     string hostname;
     void *info;
+    uint realhost;
 };
 
 vector<client *> clients;
@@ -159,6 +160,7 @@ client &addclient(int type)
     }
     c->info = server::newclientinfo();
     c->type = type;
+    c->realhost = 0;
     switch(type)
     {
         case ST_TCPIP: nonlocalclients++; break;
@@ -205,7 +207,8 @@ int getservermtu() { return serverhost ? serverhost->mtu : -1; }
 void *getclientinfo(int i) { return !clients.inrange(i) || clients[i]->type==ST_EMPTY ? NULL : clients[i]->info; }
 ENetPeer *getclientpeer(int i) { return clients.inrange(i) && clients[i]->type==ST_TCPIP ? clients[i]->peer : NULL; }
 int getnumclients()        { return clients.length(); }
-uint getclientip(int n)    { return clients.inrange(n) && clients[n]->type==ST_TCPIP ? clients[n]->peer->address.host : 0; }
+uint getclientip(int n)    { return clients.inrange(n) && clients[n]->type==ST_TCPIP ? (clients[n]->realhost ? clients[n]->realhost : clients[n]->peer->address.host) : 0; }
+void setclientip(int n, uint ip)    { if (clients.inrange(n)) clients[n]->realhost = ip; }
 
 void sendpacket(int n, int chan, ENetPacket *packet, int exclude)
 {

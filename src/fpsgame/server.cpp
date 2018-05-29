@@ -1298,7 +1298,7 @@ namespace server
 
         uchar operator[](int msg) const { return msg >= 0 && msg < NUMMSG ? msgmask[msg] : 0; }
     } msgfilter(-1, N_CONNECT, N_SERVINFO, N_INITCLIENT, N_WELCOME, N_MAPCHANGE, N_SERVMSG, N_DAMAGE, N_HITPUSH, N_SHOTFX, N_EXPLODEFX, N_DIED, N_SPAWNSTATE, N_FORCEDEATH, N_TEAMINFO, N_ITEMACC, N_ITEMSPAWN, N_TIMEUP, N_CDIS, N_CURRENTMASTER, N_PONG, N_RESUME, N_BASESCORE, N_BASEINFO, N_BASEREGEN, N_ANNOUNCE, N_SENDDEMOLIST, N_SENDDEMO, N_DEMOPLAYBACK, N_SENDMAP, N_DROPFLAG, N_SCOREFLAG, N_RETURNFLAG, N_RESETFLAG, N_INVISFLAG, N_CLIENT, N_AUTHCHAL, N_INITAI, N_EXPIRETOKENS, N_DROPTOKENS, N_STEALTOKENS, N_DEMOPACKET, -2, N_REMIP, N_NEWMAP, N_GETMAP, N_SENDMAP, N_CLIPBOARD, -3, N_EDITENT, N_EDITF, N_EDITT, N_EDITM, N_FLIP, N_COPY, N_PASTE, N_ROTATE, N_REPLACE, N_DELCUBE, N_EDITVAR, -4, N_POS, NUMMSG),
-      connectfilter(-1, N_CONNECT, -2, N_AUTHANS, -3, N_PING, NUMMSG);
+      connectfilter(-1, N_CONNECT, -2, N_AUTHANS, -3, N_PING, N_SERVCMD, NUMMSG);
 
     int checktype(int type, clientinfo *ci)
     {
@@ -2759,6 +2759,14 @@ namespace server
         remod::onevent(ONCONNECT, "i", ci->clientnum);
     }
 
+    // sauerduels
+    vector<uint> trustedhosts;
+    ICOMMAND(addtrustedhost, "s", (char* host), {
+        ENetAddress trustedaddress;
+        if (enet_address_set_host(&trustedaddress, host)) return;
+        trustedhosts.add(trustedaddress.host);
+    });
+
     void parsepacket(int sender, int chan, packetbuf &p)     // has to parse exactly each byte of the packet
     {
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
@@ -2814,6 +2822,26 @@ namespace server
                 case N_PING:
                     getint(p);
                     break;
+
+                // sauerduels
+                // this code allows a proxy server to forward a player's real ip address
+                case N_SERVCMD:
+                {
+                    getstring(text, p);
+                    if (p.len == 7 && !strcmp(text, "setip"))
+                    {
+                        uint ip = getint(p);
+                        loopv(trustedhosts)
+                        {
+                            if (getclientip(ci->clientnum) == trustedhosts[i])
+                            {
+                                setclientip(ci->clientnum, ip);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
 
                 default:
                     disconnect_client(sender, DISC_MSGERR);
