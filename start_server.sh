@@ -1,36 +1,24 @@
 #!/bin/bash
 
 PS3='Select the server you want to run: '
-options=("Primary #1" "Primary #2" "Primary #3" "Primary #4" "Primary US #1" "Backup #1" "Backup #2" "Backup #3" "Backup #4" "Quit")
+options=("Server #1" "Server #2" "Server #3" "Server #4" "Server US #1" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Primary #1")
-            ./server -fservers/primary1.cfg -sp1stats.log -d
+        "Server #1")
+            ./server -fservers/server1.cfg -ss1stats.log -d
             ;;
-        "Primary #2")
-            ./server -fservers/primary2.cfg -sp2stats.log -d
+        "Server #2")
+            ./server -fservers/server2.cfg -ss2stats.log -d
             ;;
-        "Primary #3")
-            ./server -fservers/primary3.cfg -sp3stats.log -d
+        "Server #3")
+            ./server -fservers/server3.cfg -ss3stats.log -d
             ;;
-        "Primary #4")
-            ./server -fservers/primary4.cfg -sp4stats.log -d
+        "Server #4")
+            ./server -fservers/server4.cfg -ss4stats.log -d
             ;;
-        "Primary US #1")
-            ./server -fservers/primaryus1.cfg -spus1stats.log -d
-            ;;
-        "Backup #1")
-            ./server -fservers/backup1.cfg -sb1stats.log -d
-            ;;
-        "Backup #2")
-            ./server -fservers/backup2.cfg -sb2stats.log -d
-            ;;
-        "Backup #3")
-            ./server -fservers/backup3.cfg -sb3stats.log -d
-            ;;
-        "Backup #4")
-            ./server -fservers/backup4.cfg -sb4stats.log -d
+        "Server US #1")
+            ./server -fservers/serverus1.cfg -ssus1stats.log -d
             ;;
         "Quit")
             break
