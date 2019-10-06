@@ -3269,7 +3269,7 @@ namespace server
                 filtertext(text, text, false);
                 fixmapname(text);
                 int reqmode = getint(p);
-                vote(text, reqmode, sender);
+                sendf(sender, 1, "ris", N_SERVMSG, "Use #cw to change the map.");
                 break;
             }
 
@@ -3530,13 +3530,7 @@ namespace server
             {
                 int mn = getint(p), val = getint(p);
                 getstring(text, p);
-                if(mn != ci->clientnum)
-                {
-                    if(!ci->privilege && !ci->local) break;
-                    clientinfo *minfo = (clientinfo *)getclientinfo(mn);
-                    if(!minfo || !minfo->connected || (!ci->local && minfo->privilege >= ci->privilege) || (val && minfo->privilege)) break;
-                    setmaster(minfo, val!=0, "", NULL, NULL, PRIV_MASTER, true);
-                }
+                if(mn != ci->clientnum) sendf(sender, 1, "ris", N_SERVMSG, "You are not allowed to give master on this server.");
                 else setmaster(ci, val!=0, text);
                 // don't broadcast the master password
                 break;
@@ -3624,7 +3618,8 @@ namespace server
 
                 // remod
                 //pausegame(val > 0, ci);
-                remod::pausegame(val > 0, ci);
+                if (val == 0) sendf(sender, 1, "ris", N_SERVMSG, "Use #startcw or #ready to resume the game.");
+                else remod::pausegame(val > 0, ci);
 
                 break;
             }
