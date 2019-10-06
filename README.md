@@ -4,7 +4,7 @@ SauerDuels Server
 About
 ---
 
-This project is forked from [Remod](https://github.com/vasyahuyasa/remod-sauerbraten) and customized specifically for the [SauerDuels](http://sauerduels.me/) league.
+This project is forked from [Remod](https://github.com/vasyahuyasa/remod-sauerbraten) and customized specifically for the [SauerDuels](https://sauerduels.org/) league.
 
 
 Features
@@ -51,6 +51,6 @@ Other Documentation
 Contact
 ---
 
-This project is currently managed by [Frosty](https://github.com/vaqfrosty) and [Origin](https://github.com/AngrySnout). You can talk to us either in-game or on the SauerDuels Discord channel. 
+This project is currently managed by [Frosty](https://github.com/froschdi) and [Origin](https://github.com/AngrySnout). You can talk to us either in-game or on the SauerDuels Discord channel. 
 
   * [Discord](https://discord.gg/FTSjNfz)
