@@ -1203,7 +1203,6 @@ namespace server
         // remod
         remod::onevent(ONSETMASTER, "iisss", ci->clientnum, ci->privilege, pass, authname ? authname:"", authdesc ? authdesc:"");
 
-        checkpausegame();
         return true;
     }
 
@@ -2481,7 +2480,6 @@ namespace server
             clients.removeobj(ci);
             aiman::removeai(ci);
             if(!numclients(-1, false, true)) noclients(); // bans clear when server empties
-            if(ci->local) checkpausegame();
 
             // remod
             remod::oneventi(ONDISCONNECT, "i", n);
